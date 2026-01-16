@@ -29,4 +29,7 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles;
+
+    public User(@NotBlank(message = "El nombre de usuario no puede estar vacío") String username, @NotBlank(message = "La contraseña es obligatoria") String password) {
+    }
 }

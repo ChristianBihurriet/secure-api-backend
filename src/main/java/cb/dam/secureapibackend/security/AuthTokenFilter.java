@@ -42,6 +42,8 @@ public class AuthTokenFilter  extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             log.error("No se pudo configurar la autenticación del usuario: {}", e.getMessage());
+        } finally {
+            filterChain.doFilter(request, response);
         }
     }
     private String parseJwt(HttpServletRequest request) {
