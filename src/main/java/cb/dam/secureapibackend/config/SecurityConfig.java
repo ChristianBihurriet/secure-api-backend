@@ -2,6 +2,7 @@ package cb.dam.secureapibackend.config;
 
 
 import cb.dam.secureapibackend.security.AuthTokenFilter;
+import cb.dam.secureapibackend.security.JwtAuthenticationEntryPoint;
 import cb.dam.secureapibackend.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final JwtUtils jwtUtils;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -54,6 +56,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->auth.requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
