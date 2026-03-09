@@ -1,4 +1,4 @@
-package cb.dam.secureapibackend.service.impl;
+package cb.dam.secureapibackend.service;
 
 import cb.dam.secureapibackend.model.User;
 import org.springframework.stereotype.Service;
