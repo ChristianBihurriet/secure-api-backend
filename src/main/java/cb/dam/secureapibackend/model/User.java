@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,11 @@ public class User {
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roles;
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
-    public User(@NotBlank(message = "El nombre de usuario no puede estar vacío") String username, @NotBlank(message = "La contraseña es obligatoria") String password) {
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 }

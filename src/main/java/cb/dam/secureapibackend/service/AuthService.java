@@ -4,6 +4,7 @@ package cb.dam.secureapibackend.service;
 import cb.dam.secureapibackend.dto.JwtResponse;
 import cb.dam.secureapibackend.dto.LoginRequest;
 import cb.dam.secureapibackend.dto.MessageResponse;
+import cb.dam.secureapibackend.model.Role;
 import cb.dam.secureapibackend.model.User;
 import cb.dam.secureapibackend.repository.UserRepository;
 import cb.dam.secureapibackend.security.JwtUtils;
@@ -14,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +46,7 @@ public class AuthService {
         User user = new User();
         user.setUsername(signUpRequest.getUsername());
         user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setRoles(Set.of(Role.ROLE_USER));
 
         userRepository.save(user);
 
