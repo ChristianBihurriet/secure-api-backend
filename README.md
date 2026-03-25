@@ -181,10 +181,25 @@ spring.jpa.hibernate.ddl-auto=update # para desarrollo (no usar en produccion)
 
 ## 🧪 Testing
 
-Actualmente en desarrollo.
-Se implementarán tests unitarios con JUnit y Mockito.
+El proyecto incluye **tests de integración** utilizando Spring Boot y MockMvc.
+
+Se validan los flujos principales de autenticación:
+
+* ✅ Registro de usuario
+* ✅ Login exitoso
+* ❌ Login con credenciales incorrectas
+* 🚫 Acceso a endpoint protegido sin token
+* 🔐 Acceso autorizado con JWT válido
+
+Los tests simulan peticiones HTTP reales contra la API, verificando el comportamiento completo del sistema (controller, security, servicio y base de datos).
 
 ---
+
+### ▶️ Ejecutar tests
+
+```bash
+mvn test
+```
 
 ## 📈 Uso como plantilla
 
