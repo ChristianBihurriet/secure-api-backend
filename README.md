@@ -81,22 +81,47 @@ Flujo:
 
 ## 📡 Endpoints
 
-### 🔑 Autenticación
-
 ```http
 POST /api/auth/login
 POST /api/auth/signup
+GET /api/test (protegido)
 ```
 
-### 🧪 Test protegido
-
-```http
-GET /api/test
-```
-
-👉 Requiere JWT válido
+👉 🔐  Requiere JWT válido
 
 ---
+## 👤 Crear usuario
+
+Dado que la base de datos se genera automáticamente en cada ejecución (H2 en memoria), primero debes crear un usuario.
+
+Desde Swagger:
+
+1. Ejecutar `/api/auth/signup`
+2. Crear usuario con:
+
+```json
+{
+  "username": "admin",
+  "password": "admin"
+}
+```
+---
+## 📄 Documentación API (Swagger)
+
+La API puede probarse directamente desde Swagger UI:
+
+http://localhost:8080/swagger-ui/index.html
+
+
+### 🔐 Flujo de autenticación
+
+1. Crear usuario `/api/auth/signup`
+2. Ejecutar `/api/auth/login`
+3. Copiar el token
+4. Pulsar en **Authorize 🔐**
+5. Introducir: Bearer TU_TOKEN
+6. Probar `/api/test`
+
 
 ## 📦 Ejemplo Login
 
@@ -147,8 +172,9 @@ El filtro JWT se encarga de validar automáticamente cada request
 app.jwt.secret=mi_clave_secreta_super_segura
 app.jwt.expiration-ms=86400000
 
+## configuracion de DB en este caso h2
 spring.datasource.url=jdbc:h2:mem:testdb
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=update # para desarrollo (no usar en produccion)
 ```
 
 ---
@@ -162,33 +188,42 @@ Se implementarán tests unitarios con JUnit y Mockito.
 
 ## 📈 Uso como plantilla
 
-Este proyecto está pensado para:
+Para reutilizar este proyecto:
 
-* copiarlo como base
-* integrar tu lógica de negocio
-* reutilizar la configuración JWT
+1. Clona el repositorio
+2. Elimina las entidades actuales
+3. Crea tus propias entidades y repositorios
+4. Mantén la configuración de seguridad (JWT)
+5. Ajusta `application.properties`
+6. Añade tus endpoints
 
-### Pasos típicos:
-
-1. Clonar repositorio
-2. Cambiar entidades
-3. Reutilizar seguridad
-4. Añadir nuevos endpoints
+👉 La capa de seguridad ya está lista para usar
 
 ---
 
 ## 📸 Demo
 
-*(Próximamente)*
+### Swagger UI
+
+![Swagger](docs/swagger.png)
+
+### Autenticación con JWT
+
+Flujo completo usando Swagger:
+
+1. Login
+2. Autorizar con JWT
+3. Acceso a endpoint protegido
+
+![Swagger Auth](docs/swagger-auth.png)
 
 ---
 
 ## 📈 Roadmap
 
+* 🧪 Tests
 * 🔐 Roles y permisos avanzados
 * 📄 Refresh tokens
-* 🧪 Tests
-* 📄 Swagger
 * 🐳 Docker
 
 ---
